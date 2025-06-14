@@ -1,4 +1,4 @@
-module github.com/mfajri11/lib
+module github.com/mfajri11/xyz-backend/lib
 
 go 1.22.6
 
