@@ -1,10 +1,18 @@
-package http_client
+package http
 
 import (
 	"bytes"
 	"encoding/json"
 	"net/http"
 )
+
+var (
+	DefaultHttpClient *HTTPClient
+)
+
+func init() {
+	DefaultHttpClient = &HTTPClient{cl: http.DefaultClient}
+}
 
 type Option func(*http.Request)
 
@@ -42,7 +50,7 @@ func Get(url string, options ...Option) (*http.Response, error) {
 	for _, option := range options {
 		option(req)
 	}
-	return http.DefaultClient.Do(req)
+	return DefaultHttpClient.cl.Do(req)
 }
 
 func Post(url string, body interface{}, options ...Option) (*http.Response, error) {
@@ -64,5 +72,5 @@ func Post(url string, body interface{}, options ...Option) (*http.Response, erro
 		option(req)
 	}
 
-	return http.DefaultClient.Do(req)
+	return DefaultHttpClient.cl.Do(req)
 }
